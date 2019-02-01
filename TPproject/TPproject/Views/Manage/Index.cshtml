@@ -1,0 +1,77 @@
+﻿@model TPproject.Models.User
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Личный кабинет</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+    </dl>
+    <div>
+        @if (User.IsInRole("admin"))
+        {
+            <li>@Html.ActionLink("Список сотрудников", "AdminView")</li>
+            <li>@Html.ActionLink("Добавление сотрудника", "Register", "Account")</li>
+        }
+        <ul>
+            @if (User.IsInRole("manager"))
+            {
+                <li>@Html.ActionLink("Добавление автобуса", "ManagerAddBus")</li>
+                <li>@Html.ActionLink("Список автобусов", "BusList", "Manage")</li>
+            }
+            @if (User.IsInRole("dispatcher"))
+            {
+                <li>@Html.ActionLink("Создание путевого листа", "CreateWaybill", "Manage")</li>
+                <li>@Html.ActionLink("Список путевых листов", "WaybillList", "Manage")</li>
+                <li>@Html.ActionLink("Список автобусов", "BusList", "Manage")</li>
+            }
+            @if (User.IsInRole("driver"))
+            {
+                <li>@Html.ActionLink("Список путевых листов", "WaybillList", "Manage")</li>
+            }
+        </ul>
+    </div>
+</div>

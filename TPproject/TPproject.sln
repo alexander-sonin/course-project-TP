@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPproject", "TPproject\TPproject.csproj", "{CF2E6038-A869-48B9-8D8E-80000BA3C0A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF2E6038-A869-48B9-8D8E-80000BA3C0A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2E6038-A869-48B9-8D8E-80000BA3C0A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2E6038-A869-48B9-8D8E-80000BA3C0A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2E6038-A869-48B9-8D8E-80000BA3C0A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A500C13-CB36-436A-964F-227DEE3F9C43}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://byku.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TPproject\\TPproject.csproj
+		SccProjectName1 = TPproject
+		SccLocalPath1 = TPproject
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,19 @@
+﻿@model TPproject.Models.User
+@{
+    ViewBag.Title = "DeleteUser";
+}
+
+<h2>Вы действительно хотите удалить сотрудника?</h2>
+<div>
+    <p>Имя: @Html.DisplayFor(model => model.FirstName)</p>
+    <p>Фамилия: @Html.DisplayFor(model => model.LastName)</p>
+    <p>Email: @Html.DisplayFor(model => model.Email)</p>
+    
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="submit" value="Удалить" />
+    }
+</div>

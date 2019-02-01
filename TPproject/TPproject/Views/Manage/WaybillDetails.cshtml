@@ -1,0 +1,29 @@
+﻿@model TPproject.Models.Waybill
+
+@{
+    ViewBag.Title = "WaybillDetails";
+}
+
+<h2>Изменить статус путевого листа</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер путевого листа")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        
+</div>
+<div>
+    @using (Html.BeginForm())
+    {
+        <input type="submit" name="command" value="Выполнен" />
+        <input type="submit" name="command" value="Отклонить" />
+
+        <b>   @Html.ActionLink("Назад", "WaybillList") </b>
+    }
+    </div>

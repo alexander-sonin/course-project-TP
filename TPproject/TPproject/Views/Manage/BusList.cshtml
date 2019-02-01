@@ -1,0 +1,75 @@
+﻿@model IEnumerable<TPproject.Models.Bus>
+
+@{
+      ViewBag.Title = "BusList";
+}
+
+<h2>Автобусы</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Название автобуса")
+        </th>
+        <th>
+            @Html.DisplayName("Номер")
+        </th>
+        <th>
+            @Html.DisplayName("Цвет")
+        </th>
+        <th>
+            @Html.DisplayName("VIN-номер")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name_bus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.number_bus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.color_bus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vin_bus)
+        </td>
+        <td>
+            @if (User.IsInRole("manager"))
+            {
+                @Html.ActionLink("Изменить  ", "BusEdit", new { id = item.Id }, new { @class = "viewDialog", data_dialog_title = "Изменение автобуса" })
+                @Html.ActionLink("Удалить", "BusDelete", new { id = item.Id }, new { @class = "viewDialog", data_dialog_title = "Удаление автобуса" })
+            }
+        </td>
+    </tr>
+}
+</table>
+@section scripts {
+    <link href='@Url.Content("~/Content/themes/base/jquery-ui.css")' rel="stylesheet" type="text/css" />
+    <script src='@Url.Content("~/Scripts/jquery-1.12.4.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")' type="text/javascript"></script>
+    <script>
+    $(document).ready(function () {
+
+    $.ajaxSetup({ cache: false });
+
+    $(".viewDialog").on("click", function (e) {
+    e.preventDefault();
+
+    $("<div></div>")
+    .addClass("dialog")
+    .appendTo("body")
+    .dialog({
+    title: $(this).attr("data-dialog-title"),
+    close: function () { $(this).remove() },
+    modal: true
+    })
+    .load(this.href);
+    });
+    });
+    </script>
+}

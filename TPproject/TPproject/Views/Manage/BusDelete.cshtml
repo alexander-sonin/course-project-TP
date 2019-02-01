@@ -1,0 +1,29 @@
+﻿@model TPproject.Models.Bus
+
+@{
+    ViewBag.Title = "BusEdit";
+}
+
+<div>
+<h3>Вы уверены, что хотите удалить эти данные?</h3>
+<div>
+   
+
+         <p> @Html.DisplayName("Название: ")
+            @Html.DisplayFor(model => model.name_bus) </p>
+           <p> @Html.DisplayName("Номер: ")
+            @Html.DisplayFor(model => model.number_bus)</p>
+          <p>@Html.DisplayName("Цвет: ")
+            @Html.DisplayFor(model => model.color_bus)</p>
+    <p>@Html.DisplayName("VIN-номер: ")
+            @Html.DisplayFor(model => model.vin_bus)</p>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" />
+        </div>
+    }
+</div>
+    </div>

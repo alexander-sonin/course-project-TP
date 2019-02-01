@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Buses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name_bus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="number_bus" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="color_bus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="vin_bus" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Waybills" Relationship="Self.FK_Waybills_ToTable_1" FromRole="Buses" ToRole="Waybills" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_dbo_Users_dbo_Roles_RoleID" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_dbo_Users_dbo_Roles_RoleID" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="Waybills" Relationship="Self.FK_Waybills_ToTable" FromRole="Users" ToRole="Waybills" />
+  </EntityType>
+  <EntityType Name="Waybills">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="BusId" Type="Int32" />
+    <Property Name="time_start" Type="DateTime" Precision="3" />
+    <Property Name="time_end" Type="DateTime" Precision="3" />
+    <Property Name="WaybillStatusId" Type="Int32" />
+    <NavigationProperty Name="Buses" Relationship="Self.FK_Waybills_ToTable_1" FromRole="Waybills" ToRole="Buses" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Waybills_ToTable" FromRole="Waybills" ToRole="Users" />
+    <NavigationProperty Name="WaybillStatus" Relationship="Self.FK_Waybills_ToTable_2" FromRole="Waybills" ToRole="WaybillStatus" />
+  </EntityType>
+  <EntityType Name="WaybillStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Waybills" Relationship="Self.FK_Waybills_ToTable_2" FromRole="WaybillStatus" ToRole="Waybills" />
+  </EntityType>
+  <Association Name="FK_Waybills_ToTable_1">
+    <End Role="Buses" Type="Self.Buses" Multiplicity="0..1" />
+    <End Role="Waybills" Type="Self.Waybills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Waybills">
+        <PropertyRef Name="BusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Users_dbo_Roles_RoleID">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Waybills_ToTable">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Waybills" Type="Self.Waybills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Waybills">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Waybills_ToTable_2">
+    <End Role="WaybillStatus" Type="Self.WaybillStatus" Multiplicity="0..1" />
+    <End Role="Waybills" Type="Self.Waybills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WaybillStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Waybills">
+        <PropertyRef Name="WaybillStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="Buses" EntityType="Self.Buses" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Waybills" EntityType="Self.Waybills" />
+    <EntitySet Name="WaybillStatus" EntityType="Self.WaybillStatus" />
+    <AssociationSet Name="FK_Waybills_ToTable_1" Association="Self.FK_Waybills_ToTable_1">
+      <End Role="Buses" EntitySet="Buses" />
+      <End Role="Waybills" EntitySet="Waybills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Users_dbo_Roles_RoleID" Association="Self.FK_dbo_Users_dbo_Roles_RoleID">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Waybills_ToTable" Association="Self.FK_Waybills_ToTable">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Waybills" EntitySet="Waybills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Waybills_ToTable_2" Association="Self.FK_Waybills_ToTable_2">
+      <End Role="WaybillStatus" EntitySet="WaybillStatus" />
+      <End Role="Waybills" EntitySet="Waybills" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
